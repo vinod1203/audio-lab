@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Lab Application</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body, html { 
+            background: #121212; 
+            color: #ffffff; 
+            font-family: system-ui, sans-serif; 
+            width: 100%;
+            height: 100%;
+            overflow: hidden; 
+            position: relative;
+        }
+
+        .app-container {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header-area {
+            text-align: center;
+            margin-bottom: 10px;
+            flex-shrink: 0;
+        }
+        h1 { color: #00ffcc; font-size: 20px; }
+        p { color: #aaaaaa; font-size: 12px; margin-top: 2px; }
+        
+        .controls { 
+            display: flex; 
+            justify-content: center; 
+            gap: 12px; 
+            margin-bottom: 10px; 
+            flex-shrink: 0;
+        }
+        
+        /* New Synth Settings Panel Layout */
+        .synth-panel {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 12px;
+            margin: 0 auto 15px auto;
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+        .panel-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+        label { font-size: 13px; color: #aaa; font-weight: bold; width: 80px; }
+        
+        /* Waveform Select Element */
+        select {
+            background: #2a2a2a;
+            color: #fff;
+            border: 1px solid #444;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            flex-grow: 1;
+        }
+
+        /* Custom Slider Styling */
+        .slider-container { display: flex; align-items: center; gap: 10px; flex-grow: 1; }
+        input[type="range"] { flex-grow: 1; accent-color: #00ffcc; cursor: pointer; }
+        .value-display { font-family: monospace; font-size: 14px; color: #00ffcc; width: 60px; text-align: right; }
+
+        button { 
+            background: #00ffcc; 
+            border: none; 
+            padding: 10px 20px; 
+            font-weight: bold; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            color: #121212; 
+            font-size: 14px; 
+        }
+        button:hover { background: #00cca3; }
+        
+        .canvas-container {
+            flex-grow: 1;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 0; 
+        }
+        canvas { 
+            width: 100%; 
+            height: 100%;
+            max-width: 600px;
+            background: #1a1a1a; 
+            border-radius: 12px; 
+            border: 2px solid #333; 
+            display: block; 
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <div class="header-area">
+            <h1>Audio Lab Web App</h1>
+            <p>Real-time frequency visualization framework.</p>
+        </div>
+
+        <div class="controls">
+            <button id="micBtn">🎤 Start Microphone</button>
+            <button id="toneBtn">🔊 Play Synthesizer</button>
+        </div>
+
+        <!-- Synthesizer Parameter Controls Panel -->
+        <div class="synth-panel">
+            <div class="panel-row">
+                <label for="waveType">Waveform:</label>
+                <select id="waveType">
+                    <option value="sine">Sine Wave (Pure Tone)</option>
+                    <option value="square">Square Wave (Hollow/Retro)</option>
+                    <option value="triangle">Triangle Wave (Soft Flute)</option>
+                </select>
+            </div>
+            <div class="panel-row">
+                <label for="freqSlider">Pitch:</label>
+                <div class="slider-container">
+                    <input type="range" id="freqSlider" min="100" max="2000" step="1" value="440">
+                    <span id="freqDisplay" class="value-display">440 Hz</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="canvas-container">
+            <canvas id="visualizer"></canvas>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
